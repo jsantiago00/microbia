@@ -159,6 +159,7 @@
     .btn-ico { width: 26px; height: 26px; font-size: 12px; border-radius: 7px; }
     .chips { gap: 4px; }
     .chip { padding: 2px 7px; font-size: 9.5px; }
+    .chip.chip-sec { display: none; }
     .hud-bottom { gap: 3px; }
     .dock { gap: 6px; }
     .grupo-dock { gap: 3px; padding: 4px; border-radius: 9px; }
@@ -3000,8 +3001,8 @@ function fmtTiempo(seg) {
   seg = Math.max(0, Math.ceil(seg));
   return `${Math.floor(seg / 60)}:${String(seg % 60).padStart(2, '0')}`;
 }
-function chip(txt, valor, clase) {
-  return `<div class="chip ${clase || ''}">${txt}<b>${valor}</b></div>`;
+function chip(txt, valor, clase, secundario) {
+  return `<div class="chip ${clase || ''}${secundario ? ' chip-sec' : ''}">${txt}<b>${valor}</b></div>`;
 }
 function actualizarHUD() {
   const coloniasBact = zonas.filter(z => z.dueño === 'bacterias').length;
@@ -3073,44 +3074,44 @@ function actualizarHUD() {
   let html = '';
   if (bandoJugador === 'inmune') {
     html += chip('⚡ ATP ', `${Math.floor(atpInmune)}/${CONFIG.atpMax}`, atpInmune >= CONFIG.costoUnidadInmune ? 'bien' : 'mal');
-    html += chip('🧺 Recolectoras ', recolectoras);
+    html += chip('🧺 Recolectoras ', recolectoras, null, true);
     html += chip('🛡️ Defensoras ', defensoras);
-    html += chip('⚡ Reserva en fuentes ', Math.round(zonas.filter(z => z.dueño === 'inmune' && !z.esBase).reduce((a, z) => a + z.reservaATP, 0)));
-    html += chip('🏗️ Estructura ', estructuraInmuneConstruida ? 'sí' : 'no', estructuraInmuneConstruida ? 'bien' : 'mal');
-    html += chip('🦠 Enemigas ', bacterias.length);
-    html += chip('☣️ Daño enemigo ', CONFIG.danoBacteria.toFixed(0), 'mal');
+    html += chip('⚡ Reserva en fuentes ', Math.round(zonas.filter(z => z.dueño === 'inmune' && !z.esBase).reduce((a, z) => a + z.reservaATP, 0)), null, true);
+    html += chip('🏗️ Estructura ', estructuraInmuneConstruida ? 'sí' : 'no', estructuraInmuneConstruida ? 'bien' : 'mal', true);
+    html += chip('🦠 Enemigas ', bacterias.length, null, true);
+    html += chip('☣️ Daño enemigo ', CONFIG.danoBacteria.toFixed(0), 'mal', true);
     if (escudoActivo()) html += chip('🧱 Barrera núcleo ', `${Math.round(escudoNucleo.hp)}/${Math.round(escudoNucleo.hpMax)}`, escudoNucleo.hp > 0 ? 'bien' : 'mal');
-    if (nivelSuperDef() > 0) html += chip('🛡️💪 Superdefensoras ', inmunes.filter(u => u.tipo === 'super').length, 'bien');
+    if (nivelSuperDef() > 0) html += chip('🛡️💪 Superdefensoras ', inmunes.filter(u => u.tipo === 'super').length, 'bien', true);
   } else if (bandoJugador === 'bacterias') {
     html += chip('🦠 Bacterias ', `${poblacionBacteriana()}/${capPoblacionBacteriana()}`, 'bien');
-    html += chip('🏴 Colonias ', coloniasBact);
+    html += chip('🏴 Colonias ', coloniasBact, null, true);
     html += chip('☣️ Tu daño ', (CONFIG.danoBacteria * bf('bacterias').dano).toFixed(0), 'bien');
-    if (!enRun) html += chip('🧬 Próx. mutación ', `${relojMutacion.toFixed(0)}s`);
-    html += chip('🛡️ Enemigas ', defensoras);
+    if (!enRun) html += chip('🧬 Próx. mutación ', `${relojMutacion.toFixed(0)}s`, null, true);
+    html += chip('🛡️ Enemigas ', defensoras, null, true);
     const res = Object.entries(resistenciaInmune).map(([t, v]) => `${(v * 100).toFixed(0)}%`).join('/') || '0%';
     html += chip('🧪 Resistencia rival ', res, 'mal');
-    if (nivelSuperBact() > 0) html += chip('🦠💪 Superbacterias ', bacterias.filter(u => u.tipo === 'super').length, 'bien');
-    if (nivelNido() > 0) html += chip('☣️ Cepa tóxica ', bacterias.filter(u => u.tipo === 'toxina').length, 'bien');
+    if (nivelSuperBact() > 0) html += chip('🦠💪 Superbacterias ', bacterias.filter(u => u.tipo === 'super').length, 'bien', true);
+    if (nivelNido() > 0) html += chip('☣️ Cepa tóxica ', bacterias.filter(u => u.tipo === 'toxina').length, 'bien', true);
   } else if (modoEspectador) {
     // Sin bando propio mostramos las dos economías en paralelo: rojo la
     // bacteria, verde el inmune, para leer la partida de un vistazo.
     const res = Object.entries(resistenciaInmune).map(([t, v]) => `${(v * 100).toFixed(0)}%`).join('/') || '0%';
     html += chip('🦠 Bacterias ', `${poblacionBacteriana()}/${capPoblacionBacteriana()}`, 'mal');
-    html += chip('🏴 Colonias ', coloniasBact, 'mal');
-    html += chip('☣️ Daño ', CONFIG.danoBacteria.toFixed(0), 'mal');
-    html += chip('🧬 Mutación ', `${relojMutacion.toFixed(0)}s`, 'mal');
+    html += chip('🏴 Colonias ', coloniasBact, 'mal', true);
+    html += chip('☣️ Daño ', CONFIG.danoBacteria.toFixed(0), 'mal', true);
+    html += chip('🧬 Mutación ', `${relojMutacion.toFixed(0)}s`, 'mal', true);
     html += chip('🛡️ Defensoras ', defensoras, 'bien');
-    html += chip('🧺 Recolectoras ', recolectoras, 'bien');
+    html += chip('🧺 Recolectoras ', recolectoras, 'bien', true);
     html += chip('⚡ ATP ', `${Math.floor(atpInmune)}/${CONFIG.atpMax}`, 'bien');
-    html += chip('🏗️ Estructura ', estructuraInmuneConstruida ? 'sí' : 'no', 'bien');
+    html += chip('🏗️ Estructura ', estructuraInmuneConstruida ? 'sí' : 'no', 'bien', true);
     html += chip('🧪 Resistencia ', res, 'bien');
   }
-  if (hayPartida()) html += chip('🌐 Neutrales ', neutrales);
+  if (hayPartida()) html += chip('🌐 Neutrales ', neutrales, null, true);
   if (enRun) {
     html += chip('🗺️ Sector ', run.sector);
-    html += chip('☠️ Kills ', run.kills);
-    html += chip('⬆ Tomadas ', Object.values(run.mejoras).reduce((a, b) => a + b, 0));
-    html += chip('⚠ Rival daño × ', bf(bandoIA).dano.toFixed(2), 'mal');
+    html += chip('☠️ Kills ', run.kills, null, true);
+    html += chip('⬆ Tomadas ', Object.values(run.mejoras).reduce((a, b) => a + b, 0), null, true);
+    html += chip('⚠ Rival daño × ', bf(bandoIA).dano.toFixed(2), 'mal', true);
   }
   el('chips').innerHTML = html;
 
