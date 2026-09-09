@@ -108,19 +108,22 @@
   .paneles-derecha {
     position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 6;
     display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
-    max-height: 92vh; pointer-events: none;
+    max-height: 96vh; pointer-events: none;
   }
-  .stats-panel { display: flex; align-items: flex-start; pointer-events: none; }
+  .stats-panel {
+    position: absolute; left: 0; top: 50%; transform: translateY(-50%); z-index: 6;
+    display: flex; align-items: flex-start; pointer-events: none;
+  }
   .stats-tab {
     pointer-events: auto; padding: 10px 9px; cursor: pointer; font-family: inherit; color: #8494b5;
-    background: rgba(12,17,26,.9); border: 1px solid #26324a; border-right: none;
-    border-radius: 11px 0 0 11px; backdrop-filter: blur(4px); font-size: 15px; line-height: 1;
+    background: rgba(12,17,26,.9); border: 1px solid #26324a; border-left: none;
+    border-radius: 0 11px 11px 0; backdrop-filter: blur(4px); font-size: 15px; line-height: 1;
   }
   .stats-tab:hover, .stats-tab.abierto { color: #dfe7f7; border-color: #7d95c4; }
   .chips-caja {
     pointer-events: auto; width: 196px; max-height: 34vh; overflow-y: auto;
-    padding: 10px 11px; background: rgba(10,14,22,.94); border: 1px solid #26324a; border-right: none;
-    border-radius: 12px 0 0 12px; backdrop-filter: blur(6px);
+    padding: 10px 11px; background: rgba(10,14,22,.94); border: 1px solid #26324a; border-left: none;
+    border-radius: 0 12px 12px 0; backdrop-filter: blur(6px);
   }
   .chips-caja.oculto { display: none; }
   .chip {
@@ -159,6 +162,8 @@
   }
   .accion.armada { border-color: #ffd76b; box-shadow: 0 0 0 1px #ffd76b inset, 0 0 14px rgba(255,215,107,.35); }
   .accion.lista .ico { animation: brillo 2.4s ease-in-out infinite; }
+  .accion.es-r { border-color: #b39ddb; background: rgba(103,58,183,.12); }
+  .accion.es-r .tecla { background: #b39ddb; color: #1a1030; border-color: #b39ddb; }
   @keyframes brillo { 50% { filter: drop-shadow(0 0 6px rgba(255,255,255,.55)); } }
   .grupo-dock.inmune  { border-color: #2f4a36; }
   .grupo-dock.bacteria{ border-color: #4a2f30; }
@@ -240,32 +245,32 @@
   @keyframes latir { 0%, 100% { box-shadow: 0 0 0 1px #ffd76b inset, 0 0 10px rgba(255,215,107,.22); } 50% { box-shadow: 0 0 0 1px #ffd76b inset, 0 0 22px rgba(255,215,107,.6); } }
 
   .pm-caja {
-    pointer-events: auto; width: 252px; max-height: 48vh; overflow-y: auto;
-    padding: 11px 12px; background: rgba(10,14,22,.94); border: 1px solid #26324a; border-right: none;
+    pointer-events: auto; width: 252px; max-height: 90vh; overflow-y: auto;
+    padding: 10px 12px; background: rgba(10,14,22,.94); border: 1px solid #26324a; border-right: none;
     border-radius: 12px 0 0 12px; backdrop-filter: blur(6px);
   }
   .panel-mejoras.cerrado .pm-caja { display: none; }
-  .pm-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 9px; }
-  .pm-head b { font-size: 13px; color: #dfe7f7; }
-  .pm-sub { font-size: 10px; color: #7d8bab; margin-top: 2px; line-height: 1.4; }
+  .pm-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+  .pm-head b { font-size: 12.5px; color: #dfe7f7; }
+  .pm-sub { font-size: 9.5px; color: #7d8bab; margin-top: 1px; line-height: 1.35; }
   .pm-x { background: none; border: none; color: #5b6b8c; font-size: 13px; cursor: pointer; font-family: inherit; padding: 0 2px; }
   .pm-x:hover { color: #dfe7f7; }
   .pm-vacio { font-size: 11px; color: #7d8bab; line-height: 1.55; padding: 4px 0 2px; }
-  .pm-pausa { display: flex; align-items: center; gap: 6px; margin-top: 9px; font-size: 10px; color: #7d8bab; cursor: pointer; }
+  .pm-pausa { display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 9.5px; color: #7d8bab; cursor: pointer; }
   .pm-pausa input { accent-color: #7d95c4; margin: 0; cursor: pointer; }
 
   /* --- cartas de mejora, compactas para el panel --- */
   .carta-mejora {
-    display: block; width: 100%; margin-bottom: 7px; padding: 9px 10px; border-radius: 10px;
+    display: block; width: 100%; margin-bottom: 5px; padding: 7px 9px; border-radius: 9px;
     cursor: pointer; text-align: left; position: relative;
     background: #10151f; border: 1px solid #2a344d; color: #dfe7f7; font-family: inherit;
   }
   .carta-mejora:hover { border-color: #ffd76b; background: #141b28; }
-  .carta-mejora .fila-m { display: flex; align-items: baseline; gap: 7px; }
-  .carta-mejora .ico-m { font-size: 17px; line-height: 1; }
-  .carta-mejora h3 { margin: 0; font-size: 12.5px; }
-  .carta-mejora .stk { font-size: 9px; color: #ffd76b; font-weight: 700; letter-spacing: .03em; margin-top: 2px; }
-  .carta-mejora p { margin: 4px 0 0; font-size: 10.3px; color: #9fb0cc; line-height: 1.45; }
+  .carta-mejora .fila-m { display: flex; align-items: baseline; gap: 6px; }
+  .carta-mejora .ico-m { font-size: 15px; line-height: 1; }
+  .carta-mejora h3 { margin: 0; font-size: 11.5px; }
+  .carta-mejora .stk { font-size: 8.5px; color: #ffd76b; font-weight: 700; letter-spacing: .03em; margin-top: 1px; }
+  .carta-mejora p { margin: 3px 0 0; font-size: 9.6px; color: #9fb0cc; line-height: 1.35; }
   .carta-mejora .num {
     font-size: 9px; font-weight: 800; color: #7d8bab;
     border: 1px solid #33405e; border-radius: 4px; padding: 1px 5px; flex-shrink: 0;
@@ -319,6 +324,24 @@
   .carta-bando .cb-ico { font-size: 30px; line-height: 1; margin-bottom: 6px; }
   .carta-bando h3 { margin: 0 0 5px; font-size: 15px; }
   .carta-bando p { margin: 0; font-size: 10.5px; color: #9fb0cc; line-height: 1.5; }
+  .fila-campeones { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 4px 0 16px; }
+  .carta-campeon {
+    width: 210px; padding: 14px 12px; border-radius: 14px; cursor: pointer; text-align: left;
+    background: #10151f; border: 2px solid #2a344d; color: #dfe7f7; font-family: inherit;
+  }
+  .carta-campeon:hover { transform: translateY(-2px); }
+  .carta-campeon .cc-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .carta-campeon .cc-ico { font-size: 24px; line-height: 1; }
+  .carta-campeon h3 { margin: 0; font-size: 14px; }
+  .carta-campeon .cc-frase { font-size: 10px; color: #9fb0cc; line-height: 1.45; margin: 0 0 9px; min-height: 43px; }
+  .carta-campeon .cc-kit { display: flex; flex-direction: column; gap: 3px; }
+  .carta-campeon .cc-hab { display: flex; align-items: center; gap: 6px; font-size: 9.5px; color: #c5cee2; }
+  .carta-campeon .cc-letra {
+    width: 16px; height: 16px; flex-shrink: 0; border-radius: 4px; display: flex; align-items: center; justify-content: center;
+    font-size: 8.5px; font-weight: 800; background: #202b42; color: #8494b5;
+  }
+  .carta-campeon .cc-hab.cc-r .cc-letra { background: #ffd76b; color: #1a1400; }
+  .carta-campeon .cc-hab.cc-r span:last-child { color: #ffd76b; font-weight: 700; }
   .btn-grande {
     padding: 11px 20px; font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer;
     background: #1e293b; color: #fff; border: 1px solid #44567a; border-radius: 10px; margin: 0 5px;
@@ -484,12 +507,12 @@
       <div class="modo-tabs" id="modoJuego"></div>
       <p class="modo-nota" id="selNota"></p>
       <div class="fila-bandos">
-        <button class="carta-bando" onclick="elegirBando('bacterias')">
+        <button class="carta-bando" onclick="mostrarSeleccionCampeon('bacterias')">
           <div class="cb-ico">🦠</div>
           <h3>Bacteria</h3>
           <p>Se expande sola y muta con el tiempo.<br>Biofilm · Enjambre · Esporulación</p>
         </button>
-        <button class="carta-bando" onclick="elegirBando('inmune')">
+        <button class="carta-bando" onclick="mostrarSeleccionCampeon('inmune')">
           <div class="cb-ico">🛡️</div>
           <h3>Sistema inmune</h3>
           <p>Economía de ATP y defensa activa.<br>Inmunoglobulina · Barrera · Fiebre</p>
@@ -532,6 +555,16 @@
     </div>
   </div>
 
+  <!-- ===== overlay: elegir campeón ===== -->
+  <div class="overlay oculto" id="overlayCampeon">
+    <div class="caja" style="max-width:760px">
+      <h2 id="camTitulo">Elegí tu campeón</h2>
+      <p>El rival (IA) elige uno al azar de su bando. La R es la habilidad más fuerte — y la que más tarda en volver.</p>
+      <div class="fila-campeones" id="filaCampeones"></div>
+      <button class="btn-grande" onclick="cerrarSeleccionCampeon()">← Volver</button>
+    </div>
+  </div>
+
   <!-- ===== overlay: árbol de evolución permanente ===== -->
   <div class="overlay oculto" id="overlayEvolucion">
     <div class="caja" style="max-width:1180px">
@@ -556,9 +589,7 @@
     </div>
   </div>
 
-  <!-- ===== paneles laterales derechos: mejoras arriba, stats debajo, como
-       un solo grupo centrado verticalmente (así entre los dos nunca se
-       salen de la pantalla, sea cual sea el alto disponible) ===== -->
+  <!-- ===== panel lateral derecho: mejoras (roguelike) ===== -->
   <div class="paneles-derecha">
     <div class="panel-mejoras" id="panelMejoras">
       <button class="pm-tab" id="pmTab" onclick="alternarPanelMejoras()" title="Mejoras pendientes (U)">
@@ -578,11 +609,14 @@
         <label class="pm-pausa"><input type="checkbox" id="pmPausa" onchange="fijarPausaMejora(this.checked)"> Pausar mientras elijo</label>
       </div>
     </div>
-    <div class="stats-panel" id="statsPanel">
-      <button class="stats-tab" id="btnStatsToggle" onclick="alternarStats()" title="Estadísticas">📊</button>
-      <div class="chips-caja oculto" id="chipsCaja">
-        <div class="chips" id="chips"></div>
-      </div>
+  </div>
+
+  <!-- ===== panel lateral izquierdo: estadísticas — al lado opuesto de
+       mejoras para que en pantallas chicas no se apilen los dos juntos ===== -->
+  <div class="stats-panel" id="statsPanel">
+    <button class="stats-tab" id="btnStatsToggle" onclick="alternarStats()" title="Estadísticas">📊</button>
+    <div class="chips-caja oculto" id="chipsCaja">
+      <div class="chips" id="chips"></div>
     </div>
   </div>
 </div>
@@ -828,6 +862,26 @@ const CONFIG = {
   reduccionDanoEsporulacion: 0.55,
   duracionRally: 14,
   sesgoRally: 2.6,
+  // ---- campeones: las 18 habilidades nuevas del pool (12 bacteria + 12
+  // inmune, contando las 6 de siempre) ----
+  cdToxinaLetal: 9, radioToxinaLetal: 42, danoToxinaLetal: 32, dpsToxinaLetal: 5, duracionToxinaLetal: 4,
+  cdDepredacion: 75, radioDepredacion: 50, duracionMarcaZombie: 6, duracionVidaZombie: 10,
+  cdSimbiosisLetal: 20, radioSimbiosisLetal: 55, duracionMarcaSimbiosis: 15, radioNubeSimbiosis: 38, danoNubeSimbiosis: 9, duracionNubeSimbiosis: 3,
+  cdInstintoEnjambre: 22, duracionInstintoEnjambre: 6, danoInstintoEnjambre: 1.25, velInstintoEnjambre: 1.2,
+  cdLetargoViral: 70, radioLetargoViral: 55, duracionLetargoViral: 3,
+  cdEsporasNomadas: 24, duracionEsporasNomadas: 10, intervaloEsporasNomadas: 1.5,
+  cdQuimiotaxisAgresiva: 11, radioQuimiotaxis: 30, duracionMarcaQuimiotaxis: 5, bonusQuimiotaxis: 1.3,
+  cdFrenesiDepredador: 65, duracionFrenesiDepredador: 6, lifestealFrenesi: 0.35,
+  cdEnjambreErratico: 20, duracionEnjambreErratico: 8,
+  cdFagocitosisDirigida: 10, radioFagocitosis: 35, danoFagocitosis: 40, curaFagocitosisArea: 20,
+  cdRefuerzosEmergencia: 22, cantidadRefuerzos: 2,
+  cdAnticuerpos: 26, duracionAnticuerpos: 6, absorcionAnticuerpos: 22,
+  cdInterferon: 14, radioInterferon: 45, duracionInterferon: 5, frenoInterferon: 0.65, debuffDanoInterferon: 0.75,
+  cdVacuna: 28, duracionVacuna: 8, bonusVacuna: 0.4,
+  cdMemoriaCelular: 80,
+  cdDespliegueRapido: 24, cantidadDespliegue: 4,
+  cdOpsonizacion: 70, radioOpsonizacion: 55, duracionMarcaOpsonizacion: 8, bonusOpsonizacion: 1.35,
+  cdChoqueAnafilactico: 60, radioChoqueAnafilactico: 32, danoChoqueAnafilactico: 90,
   // ---- roguelike ----
   intervaloHito: 45,      // seg. entre saltos grandes y anunciados del rival
   derivaRival: 0.0012,    // crecimiento continuo del daño rival, por segundo
@@ -1058,6 +1112,7 @@ const PERFILES_BACTERIA = {
   fuerte: { velocidad: 42, radio: 16, hpMax: 130 },
   super: { velocidad: 46, radio: 24, hpMax: 400 },
   toxina: { velocidad: 55, radio: 10, hpMax: 46 },
+  zombie: { velocidad: 50, radio: 9, hpMax: 40 },
 };
 const PERFILES_INMUNE = {
   normal: { velocidad: 58, radio: 12, hpMax: 73 },   // +vida, +un poco de velocidad
@@ -1073,6 +1128,8 @@ function velocidadEfectiva(u) {
   } else {
     if (u.tFrenadaEscudo > 0) vel *= 0.6;
     if (fiebreRestante > 0) vel *= CONFIG.frenoFiebreBacteria;
+    if (instintoEnjambreRestante > 0) vel *= CONFIG.velInstintoEnjambre;
+    if (u.tInterferon > 0) vel *= CONFIG.frenoInterferon;
   }
   return vel;
 }
@@ -1097,13 +1154,16 @@ function resistenciaContra(tipo) {
     const nm = nivelMemoria();
     if (nm > 0) base += NIVELES_MEMORIA[nm].res;
   }
+  // Vacuna: bonus temporal contra la cepa que se marcó al lanzarla.
+  if (bonusResistenciaTemp && bonusResistenciaTemp.tipo === tipo) base += bonusResistenciaTemp.valor;
   return Math.min(resistenciaMaxEfectiva(), (resistenciaInmune[tipo] || 0) + base);
 }
 
-// Mutación de la bacteria — igual que antes (no se toca su curva de poder).
+// Mutación de la bacteria — sigue mutando incluso en muerte súbita: si la
+// partida se extiende ahí, tiene más sentido que la tensión siga subiendo
+// en vez de congelarse justo cuando más importa.
 let relojMutacion = CONFIG.tiempoBaseMutacion;
 function procesarMutacionBacteria(dtSeg) {
-  if (modoMuerteSubita) return;
   // En roguelike la escalada la maneja el sistema de hitos sobre `buff`, que
   // sube solo al rival. Esta mutación toca CONFIG.danoBacteria, que es global
   // y también beneficiaría al jugador si le tocara ser bacteria.
@@ -1801,25 +1861,97 @@ function dibujarGruposFusion() {
 // ============================================================
 // HABILIDADES — 3 por bando, cooldown independiente
 // ============================================================
-let cooldowns = { inmunoglobulina: 0, barrera: 0, fiebre: 0, biofilm: 0, enjambre: 0, esporulacion: 0 };
+let cooldowns = { inmunoglobulina: 0, barrera: 0, fiebre: 0, biofilm: 0, enjambre: 0, esporulacion: 0,
+  toxinaLetal: 0, depredacion: 0, simbiosisLetal: 0, instintoEnjambre: 0, letargoViral: 0, esporasNomadas: 0,
+  quimiotaxisAgresiva: 0, frenesiDepredador: 0, enjambreErratico: 0,
+  fagocitosisDirigida: 0, refuerzosEmergencia: 0, anticuerpos: 0, interferon: 0, vacuna: 0, memoriaCelular: 0,
+  despliegueRapido: 0, opsonizacion: 0, choqueAnafilactico: 0 };
 let efectosActivos = [], barreras = [];
 let modoObjetivoHabilidad = null;
 
 const HABILIDADES = {
-  inmunoglobulina: { bando: 'inmune', icono: '💉', nombre: 'Inmunoglobulina', tecla: '1', modo: 'click', cd: 'cooldownInmunoglobulina',
+  inmunoglobulina: { bando: 'inmune', icono: '💉', nombre: 'Inmunoglobulina', modo: 'click', cd: 'cooldownInmunoglobulina',
     hint: 'Click en el mapa: cura a los tuyos y deja pegando flojo a las bacterias del área.' },
-  barrera: { bando: 'inmune', icono: '🧱', nombre: 'Barrera fibrina', tecla: '2', modo: 'arrastre', cd: 'cooldownBarrera',
+  barrera: { bando: 'inmune', icono: '🧱', nombre: 'Barrera fibrina', modo: 'arrastre', cd: 'cooldownBarrera',
     hint: 'Arrastrá en el mapa para trazar una pared temporal que desvía bacterias (los tuyos pasan).' },
-  fiebre: { bando: 'inmune', icono: '🔥', nombre: 'Fiebre', tecla: '3', modo: 'global', cd: 'cooldownFiebre',
+  fiebre: { bando: 'inmune', icono: '🔥', nombre: 'Fiebre', modo: 'global', cd: 'cooldownFiebre',
     hint: 'Global: todo tu bando pega y se mueve más rápido, y las bacterias se frenan.' },
-  biofilm: { bando: 'bacterias', icono: '🧫', nombre: 'Biofilm', tecla: '1', modo: 'click', cd: 'cooldownBiofilm',
+  biofilm: { bando: 'bacterias', icono: '🧫', nombre: 'Biofilm', modo: 'click', cd: 'cooldownBiofilm',
     hint: 'Click en el mapa: mancha que frena y daña a las inmunes que la pisan.' },
-  enjambre: { bando: 'bacterias', icono: '🌊', nombre: 'Carga enjambre', tecla: '2', modo: 'click', cd: 'cooldownEnjambre',
+  enjambre: { bando: 'bacterias', icono: '🌊', nombre: 'Carga enjambre', modo: 'click', cd: 'cooldownEnjambre',
     hint: 'Click en el mapa: todas tus bacterias cargan derecho a ese punto, más rápido.' },
-  esporulacion: { bando: 'bacterias', icono: '🧬', nombre: 'Esporulación', tecla: '3', modo: 'global', cd: 'cooldownEsporulacion',
+  esporulacion: { bando: 'bacterias', icono: '🧬', nombre: 'Esporulación', modo: 'global', cd: 'cooldownEsporulacion',
     hint: 'Global: cura a todas tus bacterias y les reduce el daño recibido unos segundos.' },
+  // ---- pool nuevo: bacteria ----
+  toxinaLetal: { bando: 'bacterias', icono: '☠️', nombre: 'Toxina Letal', modo: 'click', cd: 'cdToxinaLetal',
+    hint: 'Click en el mapa: golpe grande a las inmunes del área + veneno que sigue quemando.' },
+  depredacion: { bando: 'bacterias', icono: '🧟', nombre: 'Depredación', modo: 'click', cd: 'cdDepredacion',
+    hint: 'Click en el mapa: las inmunes del área que mueran ahí se vuelven zombies aliadas un rato (no ocupan cupo).' },
+  simbiosisLetal: { bando: 'bacterias', icono: '🦠', nombre: 'Simbiosis Letal', modo: 'click', cd: 'cdSimbiosisLetal',
+    hint: 'Click en el mapa: marca tus bacterias del área — al morir, dejan una nube de veneno.' },
+  instintoEnjambre: { bando: 'bacterias', icono: '⚡', nombre: 'Instinto de Enjambre', modo: 'global', cd: 'cdInstintoEnjambre',
+    hint: 'Global: todas tus bacterias pegan y se mueven más rápido unos segundos.' },
+  letargoViral: { bando: 'bacterias', icono: '💤', nombre: 'Letargo Viral', modo: 'click', cd: 'cdLetargoViral',
+    hint: 'Click en el mapa: duerme a las inmunes del área un par de segundos.' },
+  esporasNomadas: { bando: 'bacterias', icono: '🚶', nombre: 'Esporas Nómadas', modo: 'click', cd: 'cdEsporasNomadas',
+    hint: 'Click en el mapa: manda una mini-colonia móvil que camina hasta ahí generando bacteria en el camino.' },
+  quimiotaxisAgresiva: { bando: 'bacterias', icono: '🎯', nombre: 'Quimiotaxis Agresiva', modo: 'click', cd: 'cdQuimiotaxisAgresiva',
+    hint: 'Click en el mapa: marca a las inmunes del área — reciben más daño un rato.' },
+  frenesiDepredador: { bando: 'bacterias', icono: '🩸', nombre: 'Frenesí Depredador', modo: 'global', cd: 'cdFrenesiDepredador',
+    hint: 'Global: tus bacterias se curan por cada golpe que conectan, unos segundos.' },
+  enjambreErratico: { bando: 'bacterias', icono: '🌀', nombre: 'Enjambre Errático', modo: 'arrastre', cd: 'cdEnjambreErratico',
+    hint: 'Arrastrá en el mapa: pared móvil de señuelos que desvía a las inmunes un rato.' },
+  // ---- pool nuevo: inmune ----
+  fagocitosisDirigida: { bando: 'inmune', icono: '🍽️', nombre: 'Fagocitosis Dirigida', modo: 'click', cd: 'cdFagocitosisDirigida',
+    hint: 'Click en el mapa: golpe grande a las bacterias del área y cura a tus unidades cerca.' },
+  refuerzosEmergencia: { bando: 'inmune', icono: '🆘', nombre: 'Refuerzos de Emergencia', modo: 'click', cd: 'cdRefuerzosEmergencia',
+    hint: 'Click en el mapa: aparecen defensoras gratis ahí al instante.' },
+  anticuerpos: { bando: 'inmune', icono: '🛡️', nombre: 'Anticuerpos', modo: 'global', cd: 'cdAnticuerpos',
+    hint: 'Global: todo tu bando gana un escudo que absorbe golpes unos segundos.' },
+  interferon: { bando: 'inmune', icono: '📉', nombre: 'Interferón', modo: 'click', cd: 'cdInterferon',
+    hint: 'Click en el mapa: las bacterias del área pegan y se mueven más lento, sin daño directo.' },
+  vacuna: { bando: 'inmune', icono: '💊', nombre: 'Vacuna', modo: 'global', cd: 'cdVacuna',
+    hint: 'Global: resistencia grande temporal contra la cepa más común del rival.' },
+  memoriaCelular: { bando: 'inmune', icono: '🔁', nombre: 'Memoria Celular', modo: 'global', cd: 'cdMemoriaCelular',
+    hint: 'Global: la próxima de tus unidades que muera revive sola en el núcleo.' },
+  despliegueRapido: { bando: 'inmune', icono: '🚀', nombre: 'Despliegue Rápido', modo: 'click', cd: 'cdDespliegueRapido',
+    hint: 'Click en el mapa: teletransporta un grupo de tus unidades más cercanas al núcleo hasta ahí.' },
+  opsonizacion: { bando: 'inmune', icono: '🔬', nombre: 'Opsonización', modo: 'click', cd: 'cdOpsonizacion',
+    hint: 'Click en el mapa: marca a las bacterias del área — todo tu bando les pega con más daño un rato.' },
+  choqueAnafilactico: { bando: 'inmune', icono: '⚡', nombre: 'Choque Anafiláctico', modo: 'click', cd: 'cdChoqueAnafilactico',
+    hint: 'Click en el mapa: un golpe único y grande a las bacterias del área.' },
 };
 
+// ---- campeones: 3 por bando, cada uno con su kit Q/W/E/R propio ----
+const CAMPEONES = {
+  necrotica: { bando: 'bacterias', nombre: 'Necrótica', icono: '☠️', color: '#c62828',
+    frase: 'Todo veneno: desgasta y después se alimenta de la agonía.',
+    kit: ['biofilm', 'toxinaLetal', 'simbiosisLetal', 'frenesiDepredador'] },
+  coloniaVoraz: { bando: 'bacterias', nombre: 'Colonia Voraz', icono: '🐜', color: '#ff7043',
+    frase: 'Expande rápido y convierte cada pelea ganada en más número.',
+    kit: ['enjambre', 'instintoEnjambre', 'esporasNomadas', 'depredacion'] },
+  plagaSilenciosa: { bando: 'bacterias', nombre: 'Plaga Silenciosa', icono: '🕸️', color: '#8d6e63',
+    frase: 'Encierra, enfoca, y recién ahí remata. La más táctica.',
+    kit: ['quimiotaxisAgresiva', 'enjambreErratico', 'esporulacion', 'letargoViral'] },
+  guardiana: { bando: 'inmune', nombre: 'Guardiana', icono: '🛡️', color: '#2e7d32',
+    frase: 'Turtle puro: casi imposible de abrir de entrada.',
+    kit: ['barrera', 'refuerzosEmergencia', 'anticuerpos', 'memoriaCelular'] },
+  cazadora: { bando: 'inmune', nombre: 'Cazadora', icono: '🏹', color: '#00897b',
+    frase: 'Asesina móvil: entra, remata, sale.',
+    kit: ['fagocitosisDirigida', 'interferon', 'despliegueRapido', 'choqueAnafilactico'] },
+  bioingeniera: { bando: 'inmune', nombre: 'Bioingeniera', icono: '🧪', color: '#6a9955',
+    frase: 'Sostiene partidas largas y cierra con todo el bando pegando junto.',
+    kit: ['inmunoglobulina', 'vacuna', 'fiebre', 'opsonizacion'] },
+};
+function campeonesDe(bando) { return Object.entries(CAMPEONES).filter(([, c]) => c.bando === bando); }
+let campeonElegido = { bacterias: null, inmune: null };
+function campeonDe(bando) { return CAMPEONES[campeonElegido[bando]] || null; }
+function kitDe(bando) {
+  // El tutorial enseña siempre el kit clásico de 3, sea cual sea el
+  // campeón elegido — así no depende de qué campeón tenga cada habilidad.
+  if (tutorialActivo) return bando === 'bacterias' ? ['biofilm', 'enjambre', 'esporulacion'] : ['inmunoglobulina', 'barrera', 'fiebre'];
+  const c = campeonDe(bando); return c ? c.kit : [];
+}
 // El cooldown real de una habilidad depende del buff del bando dueño: la
 // mejora "Reflejos" y la escalada "Coordinación" pasan las dos por acá.
 // El biofilm además tiene su propio multiplicador (por la mejora de radio)
@@ -1881,8 +2013,173 @@ function lanzarEsporulacion() {
   flotante(nido.x, nido.y - 55, '🧬 ESPORULACIÓN', '#ffcc80', 16);
   return true;
 }
+// ============================================================
+// HABILIDADES NUEVAS DE CAMPEONES
+// ============================================================
+let instintoEnjambreRestante = 0, frenesiDepredadorRestante = 0, memoriaCelularLista = false;
+let esporasMoviles = [];
+
+// ---- bacteria ----
+function lanzarToxinaLetal(x, y) {
+  if (modoMuerteSubita || finPartida || cooldowns.toxinaLetal > 0) return false;
+  inmunes.forEach(u => {
+    if (u.hp > 0 && Math.hypot(u.x - x, u.y - y) <= CONFIG.radioToxinaLetal) {
+      u.hp -= CONFIG.danoToxinaLetal;
+      if (!u.veneno || u.veneno.restante < CONFIG.duracionToxinaLetal) u.veneno = { dps: CONFIG.dpsToxinaLetal, restante: CONFIG.duracionToxinaLetal };
+    }
+  });
+  crearExplosion(x, y, '#7cb342'); sfx.habilidad();
+  cooldowns.toxinaLetal = cdDe('toxinaLetal');
+  return true;
+}
+function lanzarDepredacion(x, y) {
+  if (modoMuerteSubita || finPartida || cooldowns.depredacion > 0) return false;
+  inmunes.forEach(u => { if (u.hp > 0 && Math.hypot(u.x - x, u.y - y) <= CONFIG.radioDepredacion) u.tMarcaZombie = CONFIG.duracionMarcaZombie; });
+  crearExplosion(x, y, '#8e24aa'); sfx.mutacion(); sacudir(4);
+  flotante(x, y - 30, '🧟 DEPREDACIÓN', '#ce93d8', 15);
+  cooldowns.depredacion = cdDe('depredacion');
+  return true;
+}
+function lanzarSimbiosisLetal(x, y) {
+  if (modoMuerteSubita || finPartida || cooldowns.simbiosisLetal > 0) return false;
+  bacterias.forEach(u => { if (u.hp > 0 && Math.hypot(u.x - x, u.y - y) <= CONFIG.radioSimbiosisLetal) u.tMarcaSimbiosis = CONFIG.duracionMarcaSimbiosis; });
+  crearExplosion(x, y, '#33691e'); sfx.habilidad();
+  cooldowns.simbiosisLetal = cdDe('simbiosisLetal');
+  return true;
+}
+function lanzarInstintoEnjambre() {
+  if (modoMuerteSubita || finPartida || cooldowns.instintoEnjambre > 0) return false;
+  instintoEnjambreRestante = CONFIG.duracionInstintoEnjambre;
+  cooldowns.instintoEnjambre = cdDe('instintoEnjambre');
+  sfx.mutacion(); sacudir(3);
+  flotante(nido.x, nido.y - 55, '⚡ INSTINTO DE ENJAMBRE', '#ffab91', 16);
+  return true;
+}
+function lanzarLetargoViral(x, y) {
+  if (modoMuerteSubita || finPartida || cooldowns.letargoViral > 0) return false;
+  inmunes.forEach(u => { if (u.hp > 0 && Math.hypot(u.x - x, u.y - y) <= CONFIG.radioLetargoViral) u.tAturdida = CONFIG.duracionLetargoViral; });
+  crearExplosion(x, y, '#5c6bc0'); sfx.mutacion(); sacudir(5);
+  flotante(x, y - 30, '💤 LETARGO VIRAL', '#9fa8da', 15);
+  cooldowns.letargoViral = cdDe('letargoViral');
+  return true;
+}
+function lanzarEsporasNomadas(x, y) {
+  if (modoMuerteSubita || finPartida || cooldowns.esporasNomadas > 0) return false;
+  esporasMoviles.push({ bando: 'bacterias', x: nido.x, y: nido.y, destX: x, destY: y, restante: CONFIG.duracionEsporasNomadas, tProxSpawn: 0 });
+  sfx.habilidad();
+  cooldowns.esporasNomadas = cdDe('esporasNomadas');
+  return true;
+}
+function lanzarQuimiotaxisAgresiva(x, y) {
+  if (modoMuerteSubita || finPartida || cooldowns.quimiotaxisAgresiva > 0) return false;
+  inmunes.forEach(u => { if (u.hp > 0 && Math.hypot(u.x - x, u.y - y) <= CONFIG.radioQuimiotaxis) u.tMarcaQuimiotaxis = CONFIG.duracionMarcaQuimiotaxis; });
+  crearExplosion(x, y, '#d84315'); sfx.habilidad();
+  cooldowns.quimiotaxisAgresiva = cdDe('quimiotaxisAgresiva');
+  return true;
+}
+function lanzarFrenesiDepredador() {
+  if (modoMuerteSubita || finPartida || cooldowns.frenesiDepredador > 0) return false;
+  frenesiDepredadorRestante = CONFIG.duracionFrenesiDepredador;
+  cooldowns.frenesiDepredador = cdDe('frenesiDepredador');
+  sfx.mutacion(); sacudir(3);
+  flotante(nido.x, nido.y - 55, '🩸 FRENESÍ DEPREDADOR', '#ef9a9a', 16);
+  return true;
+}
+function lanzarEnjambreErratico(x1, y1, x2, y2) {
+  if (modoMuerteSubita || finPartida || cooldowns.enjambreErratico > 0) return false;
+  if (Math.hypot(x2 - x1, y2 - y1) < 20) return false;
+  barreras.push({ bando: 'bacterias', x1, y1, x2, y2, restante: CONFIG.duracionEnjambreErratico });
+  cooldowns.enjambreErratico = cdDe('enjambreErratico');
+  sfx.habilidad();
+  return true;
+}
+// ---- inmune ----
+function lanzarFagocitosisDirigida(x, y) {
+  if (modoMuerteSubita || finPartida || cooldowns.fagocitosisDirigida > 0) return false;
+  bacterias.forEach(u => { if (u.hp > 0 && Math.hypot(u.x - x, u.y - y) <= CONFIG.radioFagocitosis) u.hp -= CONFIG.danoFagocitosis; });
+  inmunes.forEach(u => { if (u.hp > 0 && Math.hypot(u.x - x, u.y - y) <= CONFIG.radioFagocitosis) u.hp = Math.min(u.hpMax, u.hp + CONFIG.curaFagocitosisArea); });
+  crearExplosion(x, y, '#66bb6a'); sfx.habilidad();
+  cooldowns.fagocitosisDirigida = cdDe('fagocitosisDirigida');
+  return true;
+}
+function lanzarRefuerzosEmergencia(x, y) {
+  if (modoMuerteSubita || finPartida || cooldowns.refuerzosEmergencia > 0) return false;
+  for (let i = 0; i < CONFIG.cantidadRefuerzos; i++) crearInmune(x + (Math.random() - 0.5) * 24, y + (Math.random() - 0.5) * 24, null);
+  crearExplosion(x, y, '#81c784'); sfx.mutacion();
+  flotante(x, y - 30, '🆘 REFUERZOS', '#a5d6a7', 15);
+  cooldowns.refuerzosEmergencia = cdDe('refuerzosEmergencia');
+  return true;
+}
+function lanzarAnticuerpos() {
+  if (modoMuerteSubita || finPartida || cooldowns.anticuerpos > 0) return false;
+  inmunes.forEach(u => { u.escudoAbsorcion = CONFIG.absorcionAnticuerpos; });
+  cooldowns.anticuerpos = cdDe('anticuerpos');
+  sfx.mutacion(); sacudir(3);
+  flotante(nucleo.x, nucleo.y - 55, '🛡️ ANTICUERPOS', '#a5d6a7', 16);
+  return true;
+}
+function lanzarInterferon(x, y) {
+  if (modoMuerteSubita || finPartida || cooldowns.interferon > 0) return false;
+  bacterias.forEach(u => { if (u.hp > 0 && Math.hypot(u.x - x, u.y - y) <= CONFIG.radioInterferon) { u.tInterferon = CONFIG.duracionInterferon; } });
+  crearExplosion(x, y, '#4fc3f7'); sfx.habilidad();
+  cooldowns.interferon = cdDe('interferon');
+  return true;
+}
+function lanzarVacuna() {
+  if (modoMuerteSubita || finPartida || cooldowns.vacuna > 0) return false;
+  const conteo = {};
+  bacterias.forEach(u => { conteo[u.tipo] = (conteo[u.tipo] || 0) + 1; });
+  const tipoComun = Object.keys(conteo).sort((a, b) => conteo[b] - conteo[a])[0] || 'normal';
+  bonusResistenciaTemp = { tipo: tipoComun, valor: CONFIG.bonusVacuna, restante: CONFIG.duracionVacuna };
+  cooldowns.vacuna = cdDe('vacuna');
+  sfx.mutacion();
+  flotante(nucleo.x, nucleo.y - 55, `💊 VACUNA vs ${tipoComun}`, '#a5d6a7', 15);
+  return true;
+}
+function lanzarMemoriaCelular() {
+  if (modoMuerteSubita || finPartida || cooldowns.memoriaCelular > 0) return false;
+  memoriaCelularLista = true;
+  cooldowns.memoriaCelular = cdDe('memoriaCelular');
+  sfx.mutacion(); sacudir(3);
+  flotante(nucleo.x, nucleo.y - 55, '🔁 MEMORIA CELULAR LISTA', '#a5d6a7', 15);
+  return true;
+}
+function lanzarDespliegueRapido(x, y) {
+  if (modoMuerteSubita || finPartida || cooldowns.despliegueRapido > 0) return false;
+  const grupo = inmunes.filter(u => u.hp > 0 && u.tipo !== 'recolectora')
+    .sort((a, b) => Math.hypot(a.x - nucleo.x, a.y - nucleo.y) - Math.hypot(b.x - nucleo.x, b.y - nucleo.y))
+    .slice(0, CONFIG.cantidadDespliegue);
+  if (!grupo.length) return false;
+  grupo.forEach((u, i) => { u.x = x + (Math.random() - 0.5) * 30; u.y = y + (Math.random() - 0.5) * 30; crearExplosion(u.x, u.y, '#4dd0e1'); });
+  sfx.habilidad(); sacudir(3);
+  cooldowns.despliegueRapido = cdDe('despliegueRapido');
+  return true;
+}
+function lanzarOpsonizacion(x, y) {
+  if (modoMuerteSubita || finPartida || cooldowns.opsonizacion > 0) return false;
+  bacterias.forEach(u => { if (u.hp > 0 && Math.hypot(u.x - x, u.y - y) <= CONFIG.radioOpsonizacion) u.tMarcaOpsonizacion = CONFIG.duracionMarcaOpsonizacion; });
+  crearExplosion(x, y, '#ffca28'); sfx.mutacion(); sacudir(4);
+  flotante(x, y - 30, '🔬 OPSONIZACIÓN', '#ffe082', 15);
+  cooldowns.opsonizacion = cdDe('opsonizacion');
+  return true;
+}
+function lanzarChoqueAnafilactico(x, y) {
+  if (modoMuerteSubita || finPartida || cooldowns.choqueAnafilactico > 0) return false;
+  bacterias.forEach(u => { if (u.hp > 0 && Math.hypot(u.x - x, u.y - y) <= CONFIG.radioChoqueAnafilactico) u.hp -= CONFIG.danoChoqueAnafilactico; });
+  crearExplosion(x, y, '#fff176'); sfx.mutacion(); sacudir(6);
+  flotante(x, y - 30, '⚡ CHOQUE ANAFILÁCTICO', '#fff59d', 16);
+  cooldowns.choqueAnafilactico = cdDe('choqueAnafilactico');
+  return true;
+}
+
 const LANZAR = { inmunoglobulina: lanzarInmunoglobulina, barrera: lanzarBarrera, fiebre: lanzarFiebre,
-  biofilm: lanzarBiofilm, enjambre: lanzarEnjambre, esporulacion: lanzarEsporulacion };
+  biofilm: lanzarBiofilm, enjambre: lanzarEnjambre, esporulacion: lanzarEsporulacion,
+  toxinaLetal: lanzarToxinaLetal, depredacion: lanzarDepredacion, simbiosisLetal: lanzarSimbiosisLetal,
+  instintoEnjambre: lanzarInstintoEnjambre, letargoViral: lanzarLetargoViral, esporasNomadas: lanzarEsporasNomadas,
+  quimiotaxisAgresiva: lanzarQuimiotaxisAgresiva, frenesiDepredador: lanzarFrenesiDepredador, enjambreErratico: lanzarEnjambreErratico,
+  fagocitosisDirigida: lanzarFagocitosisDirigida, refuerzosEmergencia: lanzarRefuerzosEmergencia, anticuerpos: lanzarAnticuerpos,
+  interferon: lanzarInterferon, vacuna: lanzarVacuna, memoriaCelular: lanzarMemoriaCelular,
+  despliegueRapido: lanzarDespliegueRapido, opsonizacion: lanzarOpsonizacion, choqueAnafilactico: lanzarChoqueAnafilactico };
 
 function activarModoHabilidad(tipo) {
   const h = HABILIDADES[tipo];
@@ -1922,12 +2219,55 @@ function procesarEfectosActivos(dtSeg) {
       inmunes.forEach(u => {
         if (Math.hypot(u.x - ef.x, u.y - ef.y) <= CONFIG.radioBiofilm * bf('bacterias').biofilmRadio) { u.hp -= CONFIG.danoBiofilm * bf('bacterias').biofilm * dtSeg; u.frenada = true; }
       });
+    } else if (ef.tipo === 'nubeSimbiosis') {
+      inmunes.forEach(u => { if (Math.hypot(u.x - ef.x, u.y - ef.y) <= CONFIG.radioNubeSimbiosis) u.hp -= CONFIG.danoNubeSimbiosis * dtSeg; });
     }
   }
 }
-// Rally: marcador temporal al que convergen las unidades propias que no
-// tienen nada de interés a la vista. Es la orden "barata" y siempre
-// disponible del jugador (click derecho), a diferencia de las habilidades.
+// ---- relojes y marcas de las habilidades nuevas de campeones ----
+let bonusResistenciaTemp = null;
+function procesarMarcasCampeones(dtSeg) {
+  if (instintoEnjambreRestante > 0) instintoEnjambreRestante = Math.max(0, instintoEnjambreRestante - dtSeg);
+  if (frenesiDepredadorRestante > 0) frenesiDepredadorRestante = Math.max(0, frenesiDepredadorRestante - dtSeg);
+  if (bonusResistenciaTemp) { bonusResistenciaTemp.restante -= dtSeg; if (bonusResistenciaTemp.restante <= 0) bonusResistenciaTemp = null; }
+  bacterias.forEach(b => {
+    if (b.tMarcaSimbiosis > 0) b.tMarcaSimbiosis -= dtSeg;
+    if (b.tInterferon > 0) b.tInterferon -= dtSeg;
+    if (b.tMarcaOpsonizacion > 0) b.tMarcaOpsonizacion -= dtSeg;
+    if (b.tipo === 'zombie') { b.tVidaZombie -= dtSeg; if (b.tVidaZombie <= 0) b.hp = 0; }
+  });
+  inmunes.forEach(u => {
+    if (u.tMarcaZombie > 0) u.tMarcaZombie -= dtSeg;
+    if (u.tAturdida > 0) u.tAturdida -= dtSeg;
+    if (u.tMarcaQuimiotaxis > 0) u.tMarcaQuimiotaxis -= dtSeg;
+  });
+  // Esporas Nómadas: mini-colonia móvil que camina hasta el punto elegido y
+  // va largando bacterias en el camino.
+  for (let i = esporasMoviles.length - 1; i >= 0; i--) {
+    const e = esporasMoviles[i];
+    e.restante -= dtSeg;
+    if (e.restante <= 0) { esporasMoviles.splice(i, 1); continue; }
+    const dist = Math.hypot(e.destX - e.x, e.destY - e.y);
+    if (dist > 4) {
+      const vel = 55 * dtSeg;
+      e.x += (e.destX - e.x) / dist * Math.min(vel, dist);
+      e.y += (e.destY - e.y) / dist * Math.min(vel, dist);
+    }
+    e.tProxSpawn -= dtSeg;
+    if (e.tProxSpawn <= 0 && poblacionBacteriana() < capPoblacionBacteriana()) {
+      e.tProxSpawn = CONFIG.intervaloEsporasNomadas;
+      crearBacteria(e.x + (Math.random() - 0.5) * 14, e.y + (Math.random() - 0.5) * 14);
+    }
+  }
+}
+function dibujarEsporasMoviles() {
+  esporasMoviles.forEach(e => {
+    ctx.fillStyle = 'rgba(255,138,101,.85)';
+    ctx.beginPath(); ctx.arc(e.x, e.y, 9, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = 'rgba(255,138,101,.4)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(e.x, e.y, 13, 0, Math.PI * 2); ctx.stroke();
+  });
+}
 function marcarRally(bando, x, y) {
   if (finPartida || !bando) return;
   rally[bando] = { x, y, restante: CONFIG.duracionRally };
@@ -2071,6 +2411,18 @@ function crearBacteria(x, y) {
     dirAngulo: Math.random() * Math.PI * 2, objetivo: null, tInactivo: 0,
     perfil: generarPerfilOrganico(10, 1.5) };
   bacterias.push(u);
+  return u;
+}
+function crearBacteriaZombie(x, y) {
+  const p = PERFILES_BACTERIA.normal;
+  const vida = p.hpMax * bf('bacterias').hp;
+  const u = { categoria: 'unidad', especie: 'bacteria', tipo: 'zombie', peso: 0,
+    x, y, radio: p.radio, hp: vida, hpMax: vida, tVidaZombie: CONFIG.duracionVidaZombie,
+    dirAngulo: Math.random() * Math.PI * 2, objetivo: null, tInactivo: 0,
+    perfil: generarPerfilOrganico(10, 1.5) };
+  bacterias.push(u);
+  crearExplosion(x, y, '#8e24aa');
+  flotante(x, y - p.radio - 14, '🧟', '#ce93d8', 13);
   return u;
 }
 function crearBacteriaSuper(x, y, mult, duplica) {
@@ -2312,7 +2664,18 @@ function perseguirOAtacar(u, objetivo, dano, dtSeg) {
     if (nb.frena) u.tFrenadaEscudo = 1.2;
     sfx.escudoGolpe();
   } else {
-    objetivo.hp -= dano * dtSeg;
+    let golpe = dano * dtSeg;
+    // Anticuerpos: el escudo absorbe antes que la vida.
+    if (objetivo.categoria === 'unidad' && objetivo.especie === 'inmune' && objetivo.escudoAbsorcion > 0) {
+      const absorbido = Math.min(objetivo.escudoAbsorcion, golpe);
+      objetivo.escudoAbsorcion -= absorbido;
+      golpe -= absorbido;
+    }
+    objetivo.hp -= golpe;
+    // Frenesí Depredador: la bacteria se cura por lo que efectivamente pegó.
+    if (u.especie === 'bacteria' && frenesiDepredadorRestante > 0 && golpe > 0) {
+      u.hp = Math.min(u.hpMax, u.hp + golpe * CONFIG.lifestealFrenesi);
+    }
     notificarAtaque(objetivo, u);
     if (u.especie === 'bacteria' && objetivo.categoria === 'unidad' && bandoJugador === 'bacterias') {
       const nv = nivelVeneno();
@@ -2356,7 +2719,9 @@ function danoDeBacteria(u, esUnidad) {
   const mult = (u.tipo === 'fuerte' ? CONFIG.danoMultFuerte : 1)
     * (u.tipo === 'super' ? (u.multSuper || 10) : 1)
     * (u.tipo === 'toxina' ? (u.multToxina || 1) : 1)
-    * (u.debilitada ? CONFIG.debilitamientoInmunoglobulina : 1);
+    * (u.debilitada ? CONFIG.debilitamientoInmunoglobulina : 1)
+    * (instintoEnjambreRestante > 0 ? CONFIG.danoInstintoEnjambre : 1)
+    * (u.tInterferon > 0 ? CONFIG.debuffDanoInterferon : 1);
   let d = CONFIG.danoBacteria * mult * bf('bacterias').dano;
   if (esUnidad) d *= (1 - resistenciaContra(u.tipo)) * bf('inmune').armadura;
   return d;
@@ -2403,11 +2768,15 @@ function actualizarBacteria(u, dtSeg) {
 
   const rival = objetivo.categoria === 'zona' ? buscarRivalEnZona(u, objetivo, inmunes) : null;
   const accion = rival || objetivo;
-  const dano = danoDeBacteria(u, accion.categoria === 'unidad');
+  let dano = danoDeBacteria(u, accion.categoria === 'unidad');
+  if (accion.categoria === 'unidad' && accion.tMarcaQuimiotaxis > 0) dano *= CONFIG.bonusQuimiotaxis;
   perseguirOAtacar(u, accion, dano, dtSeg);
   if (accion.hp <= 0) {
     if (accion.categoria === 'unidad') {
       contarKill('bacterias', accion.x, accion.y);
+      // Depredación: si estaba marcada, se une como zombie aliada un rato
+      // en vez de quedar en la nada.
+      if (accion.tMarcaZombie > 0) crearBacteriaZombie(accion.x, accion.y);
       const pesoNueva = u.tipo === 'fuerte' ? u.peso : 1;
       // El cupo ahora es un pool compartido entre todas las colonias
       // bacterianas, no un contador por-colonia: conquistar más territorio
@@ -2436,6 +2805,7 @@ function actualizarBacteria(u, dtSeg) {
   }
 }
 function actualizarInmune(u, dtSeg) {
+  if (u.tAturdida > 0) { u.tAturdida -= dtSeg; return; }
   const objetivo = buscarObjetivo(u, bacterias, zonas);
   if (!objetivo) { moverInmuneLibre(u, dtSeg); return; }
 
@@ -2443,7 +2813,8 @@ function actualizarInmune(u, dtSeg) {
   const accion = rival || objetivo;
   if (accion.categoria === 'unidad') registrarAlerta(accion.x, accion.y, CONFIG.pesoAlerta * dtSeg);
 
-  const dano = danoDeInmune(u, accion.categoria === 'unidad');
+  let dano = danoDeInmune(u, accion.categoria === 'unidad');
+  if (accion.categoria === 'unidad' && accion.tMarcaOpsonizacion > 0) dano *= CONFIG.bonusOpsonizacion;
   perseguirOAtacar(u, accion, dano, dtSeg);
   if (accion.hp <= 0) {
     if (accion.categoria === 'unidad') {
@@ -2617,12 +2988,49 @@ function procesarIABando(bandoIA, dtSeg) {
     if (blanco && Math.random() < 0.5 * m) marcarRally(bandoIA, blanco.x, blanco.y);
   }
 }
+// Despachador genérico para las habilidades nuevas de campeones: no tiene
+// una lectura de la partida tan fina como las 6 de siempre, pero alcanza
+// para que la IA no se quede con la R en el bolsillo toda la partida.
+function iaUsarHabilidadGenerica(bandoIA, id, m) {
+  const h = HABILIDADES[id];
+  if (!h || cooldowns[id] > 0) return;
+  const propios = bandoIA === 'bacterias' ? bacterias : inmunes;
+  const rivales = bandoIA === 'bacterias' ? inmunes : bacterias;
+  const base = bandoIA === 'bacterias' ? nido : nucleo;
+  if (h.modo === 'global') {
+    const umbral = Math.max(2, Math.round(5 / m));
+    const enContacto = rivales.filter(r => propios.some(p => Math.hypot(p.x - r.x, p.y - r.y) < 150)).length;
+    if (enContacto >= umbral) LANZAR[id]();
+    return;
+  }
+  if (h.modo === 'arrastre') {
+    const amenazada = zonas.find(z => z.dueño === bandoIA && rivales.some(r => Math.hypot(r.x - z.x, r.y - z.y) < z.radio + 90));
+    if (amenazada) {
+      const ang = Math.random() * Math.PI * 2, largo = 90;
+      LANZAR[id](amenazada.x + Math.cos(ang) * 40, amenazada.y + Math.sin(ang) * 40,
+        amenazada.x + Math.cos(ang) * (40 + largo), amenazada.y + Math.sin(ang) * (40 + largo));
+    }
+    return;
+  }
+  if (h.modo === 'click') {
+    // apunta donde haya más rivales juntos; si nadie está en pelea, usa
+    // las de "arranque" (refuerzos/esporas) cerca de la propia base.
+    let mejor = null, mejorN = 0;
+    rivales.forEach(r => {
+      const n = rivales.filter(o => Math.hypot(o.x - r.x, o.y - r.y) < 60).length;
+      if (n > mejorN) { mejorN = n; mejor = r; }
+    });
+    if (mejor && mejorN >= 1) LANZAR[id](mejor.x, mejor.y);
+    else if (['refuerzosEmergencia', 'esporasNomadas'].includes(id)) LANZAR[id](base.x, base.y);
+  }
+}
 function iaHabilidadesInmune(m) {
-  if (cooldowns.inmunoglobulina <= 0) {
+  const kit = kitDe('inmune');
+  if (kit.includes('inmunoglobulina') && cooldowns.inmunoglobulina <= 0) {
     const herida = inmunes.find(u => u.tipo !== 'recolectora' && u.hp < u.hpMax * 0.6 && u.objetivo && u.objetivo.categoria === 'unidad');
     if (herida) lanzarInmunoglobulina(herida.x, herida.y);
   }
-  if (cooldowns.barrera <= 0) {
+  if (kit.includes('barrera') && cooldowns.barrera <= 0) {
     const amenazada = zonas.find(z => z.dueño === 'inmune' && bacterias.some(b => Math.hypot(b.x - z.x, b.y - z.y) < z.radio + 90));
     if (amenazada) {
       const ang = Math.random() * Math.PI * 2, largo = 90;
@@ -2632,36 +3040,57 @@ function iaHabilidadesInmune(m) {
   }
   // Fiebre cuando hay una pelea grande: cuenta bacterias cerca de cualquier
   // inmune. Umbral más bajo = IA más agresiva.
-  if (cooldowns.fiebre <= 0) {
+  if (kit.includes('fiebre') && cooldowns.fiebre <= 0) {
     const umbral = Math.max(2, Math.round(5 / m));
     const enContacto = bacterias.filter(b => inmunes.some(u => u.tipo !== 'recolectora' && Math.hypot(u.x - b.x, u.y - b.y) < 150)).length;
     if (enContacto >= umbral) lanzarFiebre();
   }
+  kit.forEach(id => { if (!['inmunoglobulina', 'barrera', 'fiebre'].includes(id)) iaUsarHabilidadGenerica('inmune', id, m); });
 }
 function iaHabilidadesBacteria(m) {
-  if (cooldowns.biofilm <= 0) {
+  const kit = kitDe('bacterias');
+  if (kit.includes('biofilm') && cooldowns.biofilm <= 0) {
     const amenazada = zonas.find(z => z.dueño === 'bacterias' && inmunes.some(u => Math.hypot(u.x - z.x, u.y - z.y) < z.radio + 80));
     if (amenazada) lanzarBiofilm(amenazada.x, amenazada.y);
   }
-  if (cooldowns.enjambre <= 0 && bacterias.length >= Math.max(3, Math.round(5 / m))) {
+  if (kit.includes('enjambre') && cooldowns.enjambre <= 0 && bacterias.length >= Math.max(3, Math.round(5 / m))) {
     const blanco = zonas.filter(z => z.dueño !== 'bacterias')
       .sort((a, b) => Math.hypot(a.x - nido.x, a.y - nido.y) - Math.hypot(b.x - nido.x, b.y - nido.y))[0];
     if (blanco) lanzarEnjambre(blanco.x, blanco.y);
   }
-  if (cooldowns.esporulacion <= 0) {
+  if (kit.includes('esporulacion') && cooldowns.esporulacion <= 0) {
     const heridas = bacterias.filter(b => b.hp < b.hpMax * 0.55).length;
     if (heridas >= Math.max(2, Math.round(4 / m))) lanzarEsporulacion();
   }
+  kit.forEach(id => { if (!['biofilm', 'enjambre', 'esporulacion'].includes(id)) iaUsarHabilidadGenerica('bacterias', id, m); });
 }
 
 function manejarMuertes() {
   for (let i = bacterias.length - 1; i >= 0; i--) {
     const b = bacterias[i];
-    if (b.hp <= 0) { crearExplosion(b.x, b.y, '#e53935'); sfx.muerte(); bacterias.splice(i, 1); }
+    if (b.hp <= 0) {
+      crearExplosion(b.x, b.y, '#e53935'); sfx.muerte();
+      // Simbiosis Letal: si estaba marcada, deja una nube de veneno al morir.
+      if (b.tMarcaSimbiosis > 0) {
+        efectosActivos.push({ tipo: 'nubeSimbiosis', x: b.x, y: b.y, restante: CONFIG.duracionNubeSimbiosis });
+      }
+      bacterias.splice(i, 1);
+    }
   }
   for (let i = inmunes.length - 1; i >= 0; i--) {
     const u = inmunes[i];
-    if (u.hp <= 0) { crearExplosion(u.x, u.y, '#4caf50'); sfx.muerte(); if (u.origen) u.origen.poblacion--; inmunes.splice(i, 1); }
+    if (u.hp <= 0) {
+      // Memoria Celular: la primera muerte después de activarla revive en el
+      // núcleo en vez de sacarse del mapa, y se consume ahí mismo.
+      if (memoriaCelularLista && bandoJugador === 'inmune') {
+        memoriaCelularLista = false;
+        u.hp = u.hpMax; u.x = nucleo.x + (Math.random() - 0.5) * 20; u.y = nucleo.y + (Math.random() - 0.5) * 20;
+        crearExplosion(u.x, u.y, '#a5d6a7'); sfx.mutacion();
+        flotante(u.x, u.y - 26, '🔁 REVIVIÓ', '#a5d6a7', 13);
+        continue;
+      }
+      crearExplosion(u.x, u.y, '#4caf50'); sfx.muerte(); if (u.origen) u.origen.poblacion--; inmunes.splice(i, 1);
+    }
   }
 }
 function aplicarSeparacion(lista) {
@@ -2685,7 +3114,8 @@ function dibujarBarra(x, y, w, h, frac, fondo, lleno) {
 function dibujarZona(z) {
   // Las neutrales tienen que leerse como territorio conquistable y NO como
   // obstáculo: relleno más claro, borde punteado y su reserva de ATP visible.
-  const color = z.dueño === 'bacterias' ? '#e53935' : z.dueño === 'inmune' ? '#4caf50' : '#7d90bd';
+  const color = z.dueño === 'bacterias' ? (campeonDe('bacterias') ? campeonDe('bacterias').color : '#e53935')
+    : z.dueño === 'inmune' ? (campeonDe('inmune') ? campeonDe('inmune').color : '#4caf50') : '#7d90bd';
   const t = performance.now() / 1000;
   // Degradé radial en vez de relleno plano: se lee como una célula con
   // cuerpo (más clara arriba-izquierda, más oscura en el borde) y no como
@@ -3105,11 +3535,11 @@ function actualizarHUD() {
 
   // bando
   el('hudQuien').innerHTML = modoEspectador ? '👁️ Espectador'
-    : bandoJugador === 'bacterias' ? '🦠 Jugás Bacteria'
-    : bandoJugador === 'inmune' ? '🛡️ Jugás Inmune' : '—';
+    : bandoJugador === 'bacterias' ? `${campeonDe('bacterias') ? campeonDe('bacterias').icono : '🦠'} ${campeonDe('bacterias') ? campeonDe('bacterias').nombre : 'Bacteria'}`
+    : bandoJugador === 'inmune' ? `${campeonDe('inmune') ? campeonDe('inmune').icono : '🛡️'} ${campeonDe('inmune') ? campeonDe('inmune').nombre : 'Inmune'}` : '—';
   el('hudRival').textContent = modoEspectador
-    ? `🦠 IA vs IA 🛡️ · ${dificultadIA}`
-    : bandoJugador ? `IA ${dificultadIA} · ${bandoIA === 'bacterias' ? 'bacteria' : 'inmune'}` : '';
+    ? `${campeonDe('bacterias') ? campeonDe('bacterias').nombre : '🦠'} vs ${campeonDe('inmune') ? campeonDe('inmune').nombre : '🛡️'} · ${dificultadIA}`
+    : bandoJugador ? `IA ${dificultadIA} · ${campeonDe(bandoIA) ? campeonDe(bandoIA).nombre : (bandoIA === 'bacterias' ? 'bacteria' : 'inmune')}` : '';
   el('hudRacha').textContent = modoEspectador
     ? `serie 🦠 ${serieEspectador.bacterias} · 🛡️ ${serieEspectador.inmune}${serieEspectador.empate ? ` · 🤝 ${serieEspectador.empate}` : ''}`
     : racha.n >= 2 ? `racha ×${racha.n}` : '';
@@ -3166,13 +3596,13 @@ function actualizarHUD() {
 
 // ---- dock de acciones: se construye una vez por bando y se refresca ----
 const ECONOMIA = [
-  { id: 'estructura', icono: '🏗️', nombre: 'Estructura', tecla: 'Q', fn: construirEstructuraInmune,
+  { id: 'estructura', icono: '🏗️', nombre: 'Estructura', tecla: 'Z', fn: construirEstructuraInmune,
     hint: 'Obligatoria una vez. Sin ella no hay defensoras ni guarnición en las fuentes.' },
-  { id: 'recolectora', icono: '🧺', nombre: 'Recolectora', tecla: 'W', fn: comprarRecolectora,
+  { id: 'recolectora', icono: '🧺', nombre: 'Recolectora', tecla: 'X', fn: comprarRecolectora,
     hint: 'Trae ATP de las fuentes conquistadas al núcleo. No pelea, pero ahora huye si la persiguen.' },
-  { id: 'defensa', icono: '🛡️', nombre: 'Defensora', tecla: 'E', fn: generarDefensaInmune,
+  { id: 'defensa', icono: '🛡️', nombre: 'Defensora', tecla: 'C', fn: generarDefensaInmune,
     hint: 'Una unidad de combate en el núcleo. Limitada por el cupo del núcleo.' },
-  { id: 'auto', icono: '🤖', nombre: 'Automático', tecla: 'R', fn: comprarAutoDefensa,
+  { id: 'auto', icono: '🤖', nombre: 'Automático', tecla: 'V', fn: comprarAutoDefensa,
     hint: 'Compra única: el núcleo gasta ATP solo para generar defensoras sin clicks.' },
 ];
 // ---- controles exclusivos del espectador ----
@@ -3240,10 +3670,13 @@ function construirDock() {
       econ.appendChild(b);
     });
   }
-  Object.entries(HABILIDADES).filter(([, h]) => h.bando === bandoJugador).forEach(([k, h]) => {
+  kitDe(bandoJugador).forEach((k, i) => {
+    const h = HABILIDADES[k]; if (!h) return;
+    const letra = ['Q', 'W', 'E', 'R'][i] || '?';
     const b = document.createElement('button');
-    b.className = 'accion'; b.id = 'acc_' + k;
-    b.innerHTML = `<span class="tecla">${h.tecla}</span><span class="ico">${h.icono}</span>
+    b.className = 'accion' + (i === 3 ? ' es-r' : '');
+    b.id = 'acc_' + k;
+    b.innerHTML = `<span class="tecla">${letra}</span><span class="ico">${h.icono}</span>
       <span class="nom">${h.nombre}</span><span class="sub"></span>
       <span class="hint">${h.hint}</span><span class="cd"></span>`;
     b.onclick = () => activarModoHabilidad(k);
@@ -3278,8 +3711,9 @@ function refrescarDock() {
       b.classList.toggle('tut-bloqueada', bloqueadoTutorial);
     });
   }
-  Object.entries(HABILIDADES).filter(([, h]) => h.bando === bandoJugador).forEach(([k, h]) => {
-    const b = el('acc_' + k); if (!b) return;
+  kitDe(bandoJugador).forEach((k, i) => {
+    const h = HABILIDADES[k];
+    const b = el('acc_' + k); if (!b || !h) return;
     const cd = cooldowns[k], cdMax = cdDe(k) || 1;
     const bloqueadoTutorial = tutorialActivo && !tutorialPermite('hab:' + k);
     b.disabled = bloqueado || cd > 0 || bloqueadoTutorial;
@@ -3288,6 +3722,7 @@ function refrescarDock() {
     b.classList.toggle('armada', modoObjetivoHabilidad === k);
     b.classList.toggle('lista', cd <= 0 && !bloqueado && !bloqueadoTutorial);
     b.classList.toggle('tut-bloqueada', bloqueadoTutorial);
+    b.classList.toggle('es-r', i === 3);
   });
 }
 function actualizarStatsDebug(coloniasBact, fuentesInm, neutrales, recolectoras, defensoras) {
@@ -3527,6 +3962,7 @@ function avanzarSimulacion(dtSeg) {
   procesarTutorial(dtSeg);
   procesarRevelado(dtSeg);
   procesarExplosionEstancamiento(dtSeg);
+  procesarMarcasCampeones(dtSeg);
   procesarIA(dtSeg);
   procesarFusionEspontanea(dtSeg);
   procesarMutacionBacteria(dtSeg);
@@ -3570,10 +4006,11 @@ function bucle(ts, id) {
   zonas.forEach(dibujarZona);
   dibujarBarreras();
   dibujarEscudoNucleo();
+  dibujarEsporasMoviles();
   dibujarGruposFusion();
   dibujarEfectosActivos();
-  bacterias.forEach(u => dibujarUnidad(u, u.tipo === 'super' ? '#ff1744' : u.tipo === 'toxina' ? '#c186ff' : u.tipo === 'fuerte' ? '#ff8a50' : '#ef5350'));
-  inmunes.forEach(u => dibujarUnidad(u, u.tipo === 'super' ? '#00e676' : u.tipo === 'recolectora' ? '#aed581' : '#66bb6a'));
+  bacterias.forEach(u => dibujarUnidad(u, u.tipo === 'super' ? '#ff1744' : u.tipo === 'toxina' ? '#c186ff' : u.tipo === 'fuerte' ? '#ff8a50' : u.tipo === 'zombie' ? '#8e24aa' : (campeonDe('bacterias') ? campeonDe('bacterias').color : '#ef5350')));
+  inmunes.forEach(u => dibujarUnidad(u, u.tipo === 'super' ? '#00e676' : u.tipo === 'recolectora' ? '#aed581' : (campeonDe('inmune') ? campeonDe('inmune').color : '#66bb6a')));
   dibujarParticulas();
   dibujarPreviewHabilidad();
   dibujarFlotantes();
@@ -3738,6 +4175,40 @@ function construirMapaBando(bando) {
   });
   return wrap;
 }
+function mostrarSeleccionCampeon(bando) {
+  el('overlaySelector').classList.add('oculto');
+  el('overlayCampeon').classList.remove('oculto');
+  el('camTitulo').textContent = `Elegí tu campeón (${bando === 'bacterias' ? '🦠 Bacteria' : '🛡️ Inmune'})`;
+  const cont = el('filaCampeones');
+  cont.innerHTML = '';
+  campeonesDe(bando).forEach(([id, c]) => {
+    const b = document.createElement('button');
+    b.className = 'carta-campeon';
+    b.style.borderColor = c.color;
+    const kitHtml = c.kit.map((hid, i) => {
+      const h = HABILIDADES[hid];
+      const letra = ['Q', 'W', 'E', 'R'][i];
+      return `<div class="cc-hab${letra === 'R' ? ' cc-r' : ''}"><span class="cc-letra">${letra}</span><span>${h.icono} ${h.nombre}</span></div>`;
+    }).join('');
+    b.innerHTML = `<div class="cc-head"><span class="cc-ico">${c.icono}</span><h3 style="color:${c.color}">${c.nombre}</h3></div>
+      <p class="cc-frase">${c.frase}</p>
+      <div class="cc-kit">${kitHtml}</div>`;
+    b.onclick = () => elegirCampeon(bando, id);
+    cont.appendChild(b);
+  });
+}
+function cerrarSeleccionCampeon() {
+  el('overlayCampeon').classList.add('oculto');
+  el('overlaySelector').classList.remove('oculto');
+}
+function elegirCampeon(bando, id) {
+  campeonElegido[bando] = id;
+  const rivalBando = bando === 'bacterias' ? 'inmune' : 'bacterias';
+  const rivales = campeonesDe(rivalBando);
+  campeonElegido[rivalBando] = rivales[Math.floor(Math.random() * rivales.length)][0];
+  el('overlayCampeon').classList.add('oculto');
+  elegirBando(bando);
+}
 function elegirBando(bando) {
   modoEspectador = false;
   bandoJugador = bando;
@@ -3850,6 +4321,10 @@ function elegirEspectador() {
   modoEspectador = true; modoRoguelike = false;
   velocidadSim = 1;
   serieEspectador = { bacterias: 0, inmune: 0, empate: 0 };
+  ['bacterias', 'inmune'].forEach(b => {
+    const opciones = campeonesDe(b);
+    campeonElegido[b] = opciones[Math.floor(Math.random() * opciones.length)][0];
+  });
   el('overlaySelector').classList.add('oculto');
   el('btnSalirTutorial').classList.remove('oculto');
   reiniciarSimulacion();
@@ -4009,8 +4484,8 @@ window.addEventListener('keydown', (ev) => {
     return;
   }
   if (!bandoJugador) return;
-  const porTecla = Object.entries(HABILIDADES).find(([, h]) => h.bando === bandoJugador && h.tecla === k);
-  if (porTecla) { activarModoHabilidad(porTecla[0]); return; }
+  const iTecla = ['q', 'w', 'e', 'r'].indexOf(k);
+  if (iTecla >= 0 && kitDe(bandoJugador)[iTecla]) { activarModoHabilidad(kitDe(bandoJugador)[iTecla]); return; }
   if (bandoJugador === 'inmune') {
     const econ = ECONOMIA.find(a => a.tecla.toLowerCase() === k);
     if (econ) { if (!econ.fn()) sfx.nope(); refrescarDock(); }
