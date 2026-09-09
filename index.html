@@ -53,7 +53,7 @@
   .tutorial-panel .tp-titulo { font-size: 12px; font-weight: 700; margin-bottom: 3px; }
   .tutorial-panel .tp-texto { font-size: 10.5px; color: #c8d3ea; line-height: 1.4; }
   .accion.tut-bloqueada { opacity: .35; }
-  .btn-ico, .accion, .chip { pointer-events: auto; }
+  .btn-ico, .accion, .chip, .stats-tab { pointer-events: auto; }
 
   /* --- arriba al centro: timer + control de territorio --- */
   .hud-top {
@@ -104,9 +104,27 @@
     bottom: max(8px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center; gap: 6px; width: calc(100% - 16px);
   }
-  .chips { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .chips { display: flex; flex-direction: column; align-items: stretch; gap: 5px; }
+  .paneles-derecha {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 6;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+    max-height: 92vh; pointer-events: none;
+  }
+  .stats-panel { display: flex; align-items: flex-start; pointer-events: none; }
+  .stats-tab {
+    pointer-events: auto; padding: 10px 9px; cursor: pointer; font-family: inherit; color: #8494b5;
+    background: rgba(12,17,26,.9); border: 1px solid #26324a; border-right: none;
+    border-radius: 11px 0 0 11px; backdrop-filter: blur(4px); font-size: 15px; line-height: 1;
+  }
+  .stats-tab:hover, .stats-tab.abierto { color: #dfe7f7; border-color: #7d95c4; }
+  .chips-caja {
+    pointer-events: auto; width: 196px; max-height: 34vh; overflow-y: auto;
+    padding: 10px 11px; background: rgba(10,14,22,.94); border: 1px solid #26324a; border-right: none;
+    border-radius: 12px 0 0 12px; backdrop-filter: blur(6px);
+  }
+  .chips-caja.oculto { display: none; }
   .chip {
-    display: flex; align-items: center; gap: 5px; padding: 4px 9px; border-radius: 999px;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 9px; border-radius: 999px;
     background: rgba(6,9,15,.74); border: 1px solid #2a3550; font-size: 11.5px; color: #a9b8d6;
     backdrop-filter: blur(6px); font-variant-numeric: tabular-nums; white-space: nowrap;
   }
@@ -204,7 +222,6 @@
 
   /* --- panel lateral de mejoras: se acumulan y las abrís cuando querés --- */
   .panel-mejoras {
-    position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 6;
     display: none; align-items: center; pointer-events: none;
   }
   .panel-mejoras.activo { display: flex; }
@@ -223,7 +240,7 @@
   @keyframes latir { 0%, 100% { box-shadow: 0 0 0 1px #ffd76b inset, 0 0 10px rgba(255,215,107,.22); } 50% { box-shadow: 0 0 0 1px #ffd76b inset, 0 0 22px rgba(255,215,107,.6); } }
 
   .pm-caja {
-    pointer-events: auto; width: 252px; max-height: 78vh; overflow-y: auto;
+    pointer-events: auto; width: 252px; max-height: 48vh; overflow-y: auto;
     padding: 11px 12px; background: rgba(10,14,22,.94); border: 1px solid #26324a; border-right: none;
     border-radius: 12px 0 0 12px; backdrop-filter: blur(6px);
   }
@@ -435,10 +452,10 @@
   </div>
 
   <div class="hud hud-sistema">
-    <button class="btn-ico" id="btnSalirTutorial" title="Volver al menú">🚪</button>
     <button class="btn-ico" id="btnPausa" title="Pausar (Espacio)">⏸</button>
-    <button class="btn-ico" id="btnReiniciar" title="Reiniciar partida (F)">↺</button>
     <button class="btn-ico" id="btnMute" title="Sonido (M)">🔊</button>
+    <button class="btn-ico" id="btnReiniciar" title="Reiniciar partida (F)">↺</button>
+    <button class="btn-ico" id="btnSalirTutorial" title="Volver al menú">🚪</button>
     <button class="btn-ico" id="btnDebug" title="Panel de debug (D)">⚙</button>
   </div>
 
@@ -448,7 +465,6 @@
     <div class="tp-texto" id="tpTexto"></div>
   </div>
   <div class="hud hud-bottom">
-    <div class="chips" id="chips"></div>
     <div class="dock">
       <div class="grupo-dock" id="dockEcon"></div>
       <div class="grupo-dock" id="dockHab"></div>
@@ -540,23 +556,33 @@
     </div>
   </div>
 
-  <!-- ===== panel lateral de mejoras (roguelike): se acumulan, no interrumpen ===== -->
-  <div class="panel-mejoras" id="panelMejoras">
-    <button class="pm-tab" id="pmTab" onclick="alternarPanelMejoras()" title="Mejoras pendientes (U)">
-      <span class="pm-ico">⬆</span>
-      <span class="pm-n" id="pmN">0</span>
-      <span class="pm-tecla">U</span>
-    </button>
-    <div class="pm-caja" id="pmCaja">
-      <div class="pm-head">
-        <div>
-          <b id="pmTitulo">Mejoras</b>
-          <div class="pm-sub" id="pmSub">—</div>
+  <!-- ===== paneles laterales derechos: mejoras arriba, stats debajo, como
+       un solo grupo centrado verticalmente (así entre los dos nunca se
+       salen de la pantalla, sea cual sea el alto disponible) ===== -->
+  <div class="paneles-derecha">
+    <div class="panel-mejoras" id="panelMejoras">
+      <button class="pm-tab" id="pmTab" onclick="alternarPanelMejoras()" title="Mejoras pendientes (U)">
+        <span class="pm-ico">⬆</span>
+        <span class="pm-n" id="pmN">0</span>
+        <span class="pm-tecla">U</span>
+      </button>
+      <div class="pm-caja" id="pmCaja">
+        <div class="pm-head">
+          <div>
+            <b id="pmTitulo">Mejoras</b>
+            <div class="pm-sub" id="pmSub">—</div>
+          </div>
+          <button class="pm-x" onclick="alternarPanelMejoras()" title="Cerrar (Esc)">✕</button>
         </div>
-        <button class="pm-x" onclick="alternarPanelMejoras()" title="Cerrar (Esc)">✕</button>
+        <div id="pmOpciones"></div>
+        <label class="pm-pausa"><input type="checkbox" id="pmPausa" onchange="fijarPausaMejora(this.checked)"> Pausar mientras elijo</label>
       </div>
-      <div id="pmOpciones"></div>
-      <label class="pm-pausa"><input type="checkbox" id="pmPausa" onchange="fijarPausaMejora(this.checked)"> Pausar mientras elijo</label>
+    </div>
+    <div class="stats-panel" id="statsPanel">
+      <button class="stats-tab" id="btnStatsToggle" onclick="alternarStats()" title="Estadísticas">📊</button>
+      <div class="chips-caja oculto" id="chipsCaja">
+        <div class="chips" id="chips"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -772,6 +798,8 @@ const CONFIG = {
   danoMultFuerte: 2.2,
   capacidadCargaRecolectora: 10,
   reservaInicialFuente: 240,
+  hpInicialConquista: 0.22,    // una zona recién tomada arranca frágil, no a full vida
+  regenZonaPorc: 0.032,        // %/seg de su hpMax mientras nadie la esté peleando: cuanto más tiempo aguanta, más cuesta sacársela
   costoEstructuraInmune: 35,
   costoRecolectora: 15,
   radioHuidaRecolectora: 130,  // a qué distancia se raja de una bacteria
@@ -1523,6 +1551,7 @@ function alternarPanelMejoras(forzar) {
   const abrir = forzar === undefined ? !panelMejorasAbierto : forzar;
   if (abrir && (!modoRoguelike || !bandoJugador || finPartida)) return;
   panelMejorasAbierto = abrir;
+  if (abrir && hudStatsAbierto) alternarStats(false); // uno colapsa al otro
   refrescarPanelMejoras();
   refrescarDock();
 }
@@ -2152,6 +2181,14 @@ function procesarRegeneracion(dtSeg) {
       if (u.hp > 0) u.hp = Math.min(u.hpMax, u.hp + r * dtSeg);
     });
   });
+  // Las zonas también curan solas mientras nadie las esté peleando. Una
+  // recién conquistada arranca frágil (ver hpInicialConquista) y con el
+  // tiempo se va "atrincherando" hasta la vida completa — así una zona que
+  // aguantó un rato en tu poder cuesta bastante más recuperar que una que
+  // acabás de perder.
+  zonas.forEach(z => {
+    if (z.hp > 0 && z.hp < z.hpMax) z.hp = Math.min(z.hpMax, z.hp + z.hpMax * CONFIG.regenZonaPorc * dtSeg);
+  });
 }
 
 // ---- movimiento ----
@@ -2387,7 +2424,7 @@ function actualizarBacteria(u, dtSeg) {
       if (!rival) u.objetivo = null;
     } else {
       orfanarPoblacion(accion);
-      accion.dueño = 'bacterias'; accion.rol = 'colonia'; accion.poblacion = 0; accion.tReloj = 0; accion.hp = accion.hpMax;
+      accion.dueño = 'bacterias'; accion.rol = 'colonia'; accion.poblacion = 0; accion.tReloj = 0; accion.hp = accion.hpMax * CONFIG.hpInicialConquista;
       sfx.conquista(); sacudir(3);
       if (bandoJugador === 'bacterias') tutorialNotificar('conquista:bacterias');
       flotante(accion.x, accion.y - accion.radio - 16, accion.esBase ? '¡NÚCLEO CAÍDO!' : 'COLONIA', '#ff8a80', accion.esBase ? 18 : 13);
@@ -2419,7 +2456,7 @@ function actualizarInmune(u, dtSeg) {
       if (!rival) u.objetivo = null;
     } else {
       orfanarPoblacion(accion);
-      accion.dueño = 'inmune'; accion.rol = 'fuente'; accion.poblacion = 0; accion.tReloj = 0; accion.hp = accion.hpMax;
+      accion.dueño = 'inmune'; accion.rol = 'fuente'; accion.poblacion = 0; accion.tReloj = 0; accion.hp = accion.hpMax * CONFIG.hpInicialConquista;
       accion.reservaATP = CONFIG.reservaInicialFuente;
       sfx.conquista(); sacudir(3);
       flotante(accion.x, accion.y - accion.radio - 16, accion.esBase ? '¡NIDO ARRASADO!' : 'FUENTE', '#a5d6a7', accion.esBase ? 18 : 13);
@@ -3003,6 +3040,13 @@ function fmtTiempo(seg) {
 }
 function chip(txt, valor, clase, secundario) {
   return `<div class="chip ${clase || ''}${secundario ? ' chip-sec' : ''}">${txt}<b>${valor}</b></div>`;
+}
+let hudStatsAbierto = false;
+function alternarStats(forzar) {
+  hudStatsAbierto = forzar === undefined ? !hudStatsAbierto : forzar;
+  el('chipsCaja').classList.toggle('oculto', !hudStatsAbierto);
+  el('btnStatsToggle').classList.toggle('abierto', hudStatsAbierto);
+  if (hudStatsAbierto && panelMejorasAbierto) alternarPanelMejoras(false); // uno colapsa al otro
 }
 function actualizarHUD() {
   const coloniasBact = zonas.filter(z => z.dueño === 'bacterias').length;
